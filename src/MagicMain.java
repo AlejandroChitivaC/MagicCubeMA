@@ -3,66 +3,55 @@ public class MagicMain {
         int[][] padre1 = new int[3][3];
         int[][] padre2 = new int[3][3];
         int[][] hijo1 = new int[3][3];
-        int[][] hijo2 = new int[3][3];
+        //Llenar los padres con numeros aleatorios
+        fillMatrix(padre1);
+        fillMatrix(padre2);
 
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                padre1[i][j] = (int) (Math.random() * 9 + 1);
-                padre2[i][j] = (int) (Math.random() * 9 + 1);
-            }
-        }
-        //padre 1
 
         System.out.println("Padre 1");
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(padre1[i][j] + " ");
-            }
-            System.out.println();
-        }
-        int sumac1 = 0;
-        int sumac2 = 0;
-        int sumac3 = 0;
-        for (int i = 0; i < 3; i++) {
-            sumac1 += padre1[i][0];
-            sumac2 += padre1[i][1];
-            sumac3 += padre1[i][2];
-        }
-        System.out.println("col1= "+sumac1);
-        System.out.println("col2= "+sumac2);
-        System.out.println("col3= "+sumac3);
-
-
-        for (int i = 0; i < 3; i++) {
-            int sumap1 = 0;
-            for (int j = 0; j < 3; j++) {
-                sumap1 += padre1[i][j];
-            }
-            System.out.println("La suma de la fila " + (i + 1) + " es: " + sumap1);
-        }
+        printMatrix(padre1);
+        System.out.println(fitnessFunction(padre1));
         System.out.println("--------------------------------------------------------------------------------------");
 
-        //padre 2
+
         System.out.println("Padre 2");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(padre2[i][j] + " ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < 3; i++) {
-            int sumap2 = 0;
-            for (int j = 0; j < 3; j++) {
-                sumap2 += padre2[i][j];
-            }
-            System.out.println("La suma de la fila " + (i + 1) + " es: " + sumap2);
-        }
+        printMatrix(padre2);
+        System.out.println(fitnessFunction(padre2));
         System.out.println("--------------------------------------------------------------------------------------");
-
-
-
 
     }
+
+    public static int fitnessFunction(int[][] matrix) {
+        int fitness = 0;
+//filas
+        if (matrix[0][0] + matrix[0][1] + matrix[0][2] == 15) fitness++;
+        if (matrix[1][0] + matrix[1][1] + matrix[1][2] == 15) fitness++;
+        if (matrix[2][0] + matrix[2][1] + matrix[2][2] == 15) fitness++;
+        //columnas
+        if (matrix[0][0] + matrix[1][0] + matrix[2][0] == 15) fitness++;
+        if (matrix[0][1] + matrix[1][1] + matrix[2][1] == 15) fitness++;
+        if (matrix[0][2] + matrix[1][2] + matrix[2][2] == 15) fitness++;
+        //diagonales
+        if (matrix[0][1] + matrix[1][1] + matrix[2][2] == 15) fitness++;
+        if (matrix[0][2] + matrix[1][1] + matrix[2][0] == 15) fitness++;
+        return fitness;
+    }
+    public static void fillMatrix(int[][] m1){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                m1[i][j] = (int) (Math.random() * 9 + 1);
+            }
+        }
+    }
+    private static void printMatrix(int[][] p) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(p[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+
 }
